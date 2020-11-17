@@ -71,15 +71,20 @@ class BST
   end
 
   def find(data)
-    if @root.data
-      BST._find(data, @root)
+    if BST._find(data, @root)
+      puts "found!!"
     else
-      puts "tree empty!!"
+      puts "not found!!"
     end
   end
 
-  def delete(data)
-
+  # def delete(data)
+  #   if @root.data
+  #     BST._delete(data, @root)
+  #   else
+  #     puts "tree empty!!"
+  #   end
+  # end
   
   private
 
@@ -128,18 +133,28 @@ class BST
   end
 
   def self._find(data, node)
-    if node.value == value
-      puts "found!!"
-      return
-    elsif value > node.value
-      BST._find(data, node.right)
-    else
-      BST._find(data, node.left)
+    unless node&.data
+      return nil
     end
-    puts "not found!!"
+    if node.data == data
+      return node
+    elsif data > node.data
+      return BST._find(data, node.right)
+    else
+      return BST._find(data, node.left)
+    end
   end
 
-  def 
+  # def self._delete(data, node)
+  #   if node.data > data
+  #     BST._delete(data, node.left)
+  #   elsif node.data < data
+  #     BST._delete(data, node.right)
+  #   else
+  #     unless node.right && node.left
+  #       return
+  #     end
+    
 end
 
 tree = BST.new()
