@@ -23,7 +23,7 @@ class BST
   end
 
   def largest
-    BST.largest(@root)
+    BST._largest(@root)
   end
 
   def smallest
@@ -89,10 +89,10 @@ class BST
     end
   end
 
-  def self.largest(node)
+  def self._largest(node)
     return nil unless node
     return node unless node.right
-    BST.largest(node.right)
+    BST._largest(node.right)
   end
 
   def self._find(data, node)
