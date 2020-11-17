@@ -23,138 +23,123 @@ class BST
   end
 
   def largest
-    node = @root
-    while node.right
-      node = node.right
-    end
-    if (node.data)
-      puts node.data
-    else
-      puts "tree empty!!"
-    end
+    BST.largest(@root)
   end
 
   def smallest
-    node = @root
-    while node.left
-      node = node.left
-    end
-    if (node.data)
-      puts node.data
-    else
-      puts "tree empty!!"
-    end
+    BST._smallest(@root)
   end
 
   def inorder_traversal
-    if @root.data
-      BST._inorder_traversal(@root)
-    else
-      puts "tree empty!!"
-    end
+    BST._inorder_traversal(@root)
+  end
+
+  def postorder_traversal
+    BST._postorder_traversal(@root)
   end
 
   def preorder_traversal
-    if @root.data
-      BST._preorder_traversal(@root)
-    else
-      puts "tree empty!!"
-    end
-  end
-  
-  def preorder_traversal
-    if @root.data
-      BST._preorder_traversal(@root)
-    else
-      puts "tree empty!!"
-    end
+    BST._preorder_traversal(@root)
   end
 
   def find(data)
-    if BST._find(data, @root)
-      puts "found!!"
-    else
-      puts "not found!!"
-    end
+    BST._find(data, @root)
   end
 
-  # def delete(data)
-  #   if @root.data
-  #     BST._delete(data, @root)
-  #   else
-  #     puts "tree empty!!"
-  #   end
-  # end
-  
-  private
+  def delete(data)
+    @root = BST._delete(data, @root)
+  end
 
-  def self._insert(data, node)
-    if node.data < data
+  def self._insert(data,node)
+    return BSTNode.new(data) unless node
+    if data > node.data
       if node.right
         BST._insert(data, node.right)
       else
         node.right = BSTNode.new(data)
       end
     elsif node.left
-        BST._insert(data, node.left)
+      BST._insert(data, node.left)
     else
       node.left = BSTNode.new(data)
     end
+    node
   end
 
   def self._inorder_traversal(node)
-    if node.left
+    if node
       BST._inorder_traversal(node.left)
-    end
-    puts "#{node.data} "
-    if node.right
+      puts "#{node.data} "
       BST._inorder_traversal(node.right)
     end
   end
 
   def self._preorder_traversal(node)
-    puts "#{node.data} "
-    if node.left
-      BST._preorder_traversal(node.left)
-    end
-    if node.right
-      BST._preorder_traversal(node.right)
+    if node
+      puts "#{node.data} "
+      BST._inorder_traversal(node.left)
+      BST._inorder_traversal(node.right)
     end
   end
 
   def self._postorder_traversal(node)
-    if node.left
-      BST._postorder_traversal(node.left)
+    if node
+      BST._inorder_traversal(node.left)
+      BST._inorder_traversal(node.right)
+      puts "#{node.data} "
     end
-    if node.right
-      BST._postorder_traversal(node.right)
-    end
-    puts "#{node.data}"
+  end
+
+  def self.largest(node)
+    return nil unless node
+    return node unless node.right
+    BST.largest(node.right)
   end
 
   def self._find(data, node)
-    unless node&.data
-      return nil
+    return nil unless node && node.data
+    return node if node.data == data
+    if data > node.data
+      BST._find(data, node.right)
+    elsif
+      BST._find(data, node.left)
     end
-    if node.data == data
-      return node
-    elsif data > node.data
-      return BST._find(data, node.right)
+    return nil
+  end
+
+  def self._smallest(node)
+    return nil unless node
+    return node unless node.left
+    BST._smallest(node.left)
+  end
+
+  def self._delete_smallest(node)
+    return nil unless node
+    if node.left == BST._smallest(node)
+      node.left = node.left.right
     else
-      return BST._find(data, node.left)
+      BST._delete_smallest(node.left)
     end
   end
 
-  # def self._delete(data, node)
-  #   if node.data > data
-  #     BST._delete(data, node.left)
-  #   elsif node.data < data
-  #     BST._delete(data, node.right)
-  #   else
-  #     unless node.right && node.left
-  #       return
-  #     end
-    
+  def self._delete(data, node)
+    return nil unless node
+
+    if node.data < data
+      node.right = BST._delete(data, node.right)
+    elsif node.data > data
+      node.left = BST._delete(data, node.left)
+    else
+      return node.left unless node.right
+      return node.right unless node.left
+
+      target = node
+      node = _smallest(target.right)
+      node.right = target.right
+      BST._delete_smallest(target.right)
+      node.left = target.left
+    end
+  end
 end
 
 tree = BST.new()
@@ -169,6 +154,7 @@ def print_help
     "l \tto print largest\n" +
     "s \tto print smallest\n" +
     "f \tto find an element\n" +
+    "d \tto delete an element\n" +
     "h \tto show help\n" +
     "q \tto quit\n\n"
 end
@@ -199,13 +185,17 @@ while action != "q"
     tree.postorder_traversal
   when "l"
     puts "largest"
-    tree.largest
+    puts tree.largest.data
   when "s"
     puts "smallest"
-    tree.smallest
+    puts tree.smallest.data
   when "f"
     puts "enter data to be searched"
     data = gets.chomp.to_i
     tree.find(data)
+  when "d"
+    puts "enter data to be deleted"
+    data = gets.chomp.to_i
+    tree.delete(data)
   end
 end
