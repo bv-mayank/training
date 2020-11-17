@@ -63,7 +63,6 @@ class BST
     else
       node.left = BSTNode.new(data)
     end
-    node
   end
 
   def self._inorder_traversal(node)
