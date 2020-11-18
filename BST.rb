@@ -18,7 +18,22 @@ class BST
 
   def insert(data)
     if @root&.data
-      BST._insert(data, @root)
+      node = @root
+      while node.data
+        if data > node.data
+          if node.right
+            node = node.right
+          else
+            node.right = BSTNode.new(data)
+            break
+          end
+        elsif node.left
+          node = node.left
+        else
+          node.left = BSTNode.new(data)
+          break
+        end
+      end
     else
       @root = BSTNode.new(data)
     end
@@ -82,23 +97,6 @@ class BST
   end
 
   private
-
-  def self._insert(data, node)
-    unless node
-      return
-    end
-    if data > node.data
-      if node.right
-        BST._insert(data, node.right)
-      else
-        node.right = BSTNode.new(data)
-      end
-    elsif node.left
-      BST._insert(data, node.left)
-    else
-      node.left = BSTNode.new(data)
-    end
-  end
 
   def self._inorder_traversal(node)
     if node&.data
