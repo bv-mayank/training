@@ -85,11 +85,16 @@ class BST
     end
   end
 
-  def preorder_traversal
-    unless @root&.data
-      return "tree empty!!"
+  def preorder_traversal(subtree_root = @root)
+    if subtree_root&.data
+      return (
+        "#{subtree_root.data}," +
+        preorder_traversal(subtree_root.left) +
+        preorder_traversal(subtree_root.right)
+      )
+    else
+      return ""
     end
-    return BST._preorder_traversal(@root)
   end
 
   def levelorder_traversal
@@ -113,18 +118,6 @@ class BST
   end
 
   private
-
-  def self._preorder_traversal(node)
-    if node&.data
-      return (
-        "#{node.data}," +
-        BST._preorder_traversal(node.left) +
-        BST._preorder_traversal(node.right)
-      )
-    else
-      return ""
-    end
-  end
 
   def self._levelorder_traversal(node)
     result = ""
