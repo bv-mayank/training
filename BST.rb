@@ -98,10 +98,20 @@ class BST
   end
 
   def levelorder_traversal
-    unless @root&.data
-      return "tree empty!!"
+    result = ""
+    node = @root
+    if node&.data
+      queue = LL.new()
+      queue.insert_last(node)
+      queue_node = queue.delete_first
+      while queue_node&.data
+        result = result + "#{queue_node.data.data},"
+        queue.insert_last(queue_node.data.left)
+        queue.insert_last(queue_node.data.right)
+        queue_node = queue.delete_first
+      end
     end
-    return BST._levelorder_traversal(@root)
+    return result
   end
 
   def find(data)
@@ -118,22 +128,6 @@ class BST
   end
 
   private
-
-  def self._levelorder_traversal(node)
-    result = ""
-    if node&.data
-      queue = LL.new()
-      queue.insert_last(node)
-      queue_node = queue.delete_first
-      while queue_node&.data
-        result = result + "#{queue_node.data.data},"
-        queue.insert_last(queue_node.data.left)
-        queue.insert_last(queue_node.data.right)
-        queue_node = queue.delete_first
-      end
-    end
-    return result
-  end
 
   def self._find(data, node)
     return nil unless node && node.data
