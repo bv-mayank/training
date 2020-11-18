@@ -66,11 +66,11 @@ while action != "q"
     puts "levelorder traversal"
     puts tree.levelorder_traversal
   when "l"
-    puts "largest"
-    puts tree.largest.data
+    largest = tree.largest
+    puts largest&.data ? "largest : #{largest&.data}" : "tree empty!!"
   when "s"
-    puts "smallest"
-    puts tree.smallest.data
+    smallest = tree.smallest
+    puts smallest&.data ? "smallest : #{smallest&.data}" : "tree empty!!"
   when "f"
     puts "enter data to be searched"
     data = gets.chomp.to_i

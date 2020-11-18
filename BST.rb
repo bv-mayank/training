@@ -41,8 +41,7 @@ class BST
 
   def largest
     unless @root&.data
-      puts "tree empty!!"
-      return
+      return nil
     end
     node = @root
     while node.right
@@ -51,12 +50,15 @@ class BST
     return node
   end
 
-  def smallest
+  def smallest(subtree_root = @root)
     unless @root&.data
-      puts "tree empty!!"
-      return
+      return nil
     end
-    return BST._smallest(@root)
+    node = subtree_root
+    while node.left
+      node = node.left
+    end
+    return node
   end
 
   def inorder_traversal
@@ -164,15 +166,9 @@ class BST
     end
   end
 
-  def self._smallest(node)
-    return nil unless node
-    return node unless node.left
-    return BST._smallest(node.left)
-  end
-
   def self._delete_smallest(node)
     return nil unless node
-    if node.left == BST._smallest(node)
+    if node.left == smallest(node)
       node.left = node.left.right
     else
       BST._delete_smallest(node.left)
@@ -191,7 +187,7 @@ class BST
       return node.right unless node.left
 
       target = node
-      node = _smallest(target.right)
+      node = smallest(target.right)
       node.right = target.right
       BST._delete_smallest(target.right)
       node.left = target.left
