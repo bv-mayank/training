@@ -1,8 +1,5 @@
 require_relative "BST"
 
-tree = BST.new()
-action = "h"
-
 def print_help
   puts "\n" +
     "i \tto insert\n" +
@@ -18,9 +15,32 @@ def print_help
     "q \tto quit\n\n"
 end
 
+tree = BST.new()
+
+puts "do you want to load tree from a file? [y/n]"
+option = gets.chomp
+if option == "y"
+  puts "enter filename"
+  filename = gets.chomp
+  if File.exists?(filename)
+    file = File.open(filename)
+    file_data = file.read
+    data_array = file_data.split(',')
+    data_array.each { |data|
+      if data.to_i != 0 || (data == "0")
+        tree.insert(data.to_i)
+      end
+    }
+    file.close
+  else
+    puts "no such file!!"
+  end
+end
+
 print_help
+
+action = ""
 while action != "q"
-  
   action = gets.chomp
   case action
   when "h"
@@ -59,5 +79,11 @@ while action != "q"
     puts "enter data to be deleted"
     data = gets.chomp.to_i
     tree.delete(data)
+  when "q"
+    puts "do you want to store the tree in a output file? [y/n]"
+    option = gets.chomp
+    if option == "y"
+      File.open("output.txt", "w") { |f| f.write tree.levelorder_traversal }
+    end
   end
 end
