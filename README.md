@@ -1,1 +1,2 @@
 # training
+```ruby main.rb```
