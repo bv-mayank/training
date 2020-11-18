@@ -1,2 +1,2 @@
 # training
-```ruby main.rb```
+run using ```ruby main.rb```
