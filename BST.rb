@@ -44,7 +44,11 @@ class BST
       puts "tree empty!!"
       return
     end
-    return BST._largest(@root)
+    node = @root
+    while node.right
+      node = node.right
+    end
+    return node
   end
 
   def smallest
@@ -148,12 +152,6 @@ class BST
     else
       return ""
     end
-  end
-
-  def self._largest(node)
-    return nil unless node
-    return node unless node.right
-    return BST._largest(node.right)
   end
 
   def self._find(data, node)
