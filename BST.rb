@@ -115,12 +115,17 @@ class BST
   end
 
   def find(data)
-    node = BST._find(data, @root)
-    if node
-      puts "found!!"
-    else
-      puts "not found!!"
+    node = @root
+    while node&.data
+      if data > node&.data
+        node = node.right
+      elsif data < node&.data
+        node = node.left
+      else
+        return node
+      end
     end
+    return node
   end
 
   def delete(data)
@@ -128,16 +133,6 @@ class BST
   end
 
   private
-
-  def self._find(data, node)
-    return nil unless node && node.data
-    return node if node.data == data
-    if data > node.data
-      BST._find(data, node.right)
-    else
-      BST._find(data, node.left)
-    end
-  end
 
   def self._delete_smallest(node)
     return nil unless node

@@ -55,16 +55,16 @@ while action != "q"
     }
   when "in"
     puts "inorder traversal"
-    puts tree.inorder_traversal
+    puts tree.inorder_traversal || "tree empty!!"
   when "pr"
     puts "preorder traversal"
-    puts tree.preorder_traversal
+    puts tree.preorder_traversal || "tree empty!!"
   when "po"
     puts "postorder traversal"
-    puts tree.postorder_traversal
+    puts tree.postorder_traversal || "tree empty!!"
   when "le"
     puts "levelorder traversal"
-    puts tree.levelorder_traversal
+    puts tree.levelorder_traversal || "tree empty!!"
   when "l"
     largest = tree.largest
     puts largest&.data ? "largest : #{largest&.data}" : "tree empty!!"
@@ -74,7 +74,8 @@ while action != "q"
   when "f"
     puts "enter data to be searched"
     data = gets.chomp.to_i
-    tree.find(data)
+    node = tree.find(data)
+    puts node&.data ? "found!!" : "not found!!"
   when "d"
     puts "enter data to be deleted"
     data = gets.chomp.to_i
