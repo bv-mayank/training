@@ -51,7 +51,7 @@ class BST
   end
 
   def smallest(subtree_root = @root)
-    unless @root&.data
+    unless subtree_root&.data
       return nil
     end
     node = subtree_root
@@ -61,11 +61,16 @@ class BST
     return node
   end
 
-  def inorder_traversal
-    unless @root&.data
-      return "tree empty!!"
+  def inorder_traversal(subtree_root = @root)
+    if subtree_root&.data
+      return (
+        inorder_traversal(subtree_root.left) +
+        "#{subtree_root.data}," +
+        inorder_traversal(subtree_root.right)
+      )
+    else
+      return ""
     end
-    return BST._inorder_traversal(@root)
   end
 
   def postorder_traversal
@@ -103,18 +108,6 @@ class BST
   end
 
   private
-
-  def self._inorder_traversal(node)
-    if node&.data
-      return (
-        BST._inorder_traversal(node.left) +
-        "#{node.data}," +
-        BST._inorder_traversal(node.right)
-      )
-    else
-      return ""
-    end
-  end
 
   def self._preorder_traversal(node)
     if node&.data
