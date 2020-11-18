@@ -55,16 +55,20 @@ while action != "q"
     }
   when "in"
     puts "inorder traversal"
-    puts tree.inorder_traversal || "tree empty!!"
+    result = tree.inorder_traversal
+    puts result == "" ? "tree empty!!" : result
   when "pr"
     puts "preorder traversal"
-    puts tree.preorder_traversal || "tree empty!!"
+    result = tree.preorder_traversal
+    puts result == "" ? "tree empty!!" : result
   when "po"
     puts "postorder traversal"
-    puts tree.postorder_traversal || "tree empty!!"
+    result = tree.postorder_traversal
+    puts result == "" ? "tree empty!!" : result
   when "le"
     puts "levelorder traversal"
-    puts tree.levelorder_traversal || "tree empty!!"
+    result = tree.levelorder_traversal
+    puts result == "" ? "tree empty!!" : result
   when "l"
     largest = tree.largest
     puts largest&.data ? "largest : #{largest&.data}" : "tree empty!!"
@@ -79,7 +83,7 @@ while action != "q"
   when "d"
     puts "enter data to be deleted"
     data = gets.chomp.to_i
-    tree.delete(data)
+    puts tree.delete(data) ? "deleted" : "no such element"
   when "q"
     puts "do you want to store the tree in a output file? [y/n]"
     option = gets.chomp

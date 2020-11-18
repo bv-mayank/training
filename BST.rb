@@ -129,7 +129,44 @@ class BST
   end
 
   def delete(data)
-    @root = BST._delete(data, @root)
+    node = @root
+    parent_node = nil
+    l_or_r = ""
+    while node&.data
+      if data > node&.data
+        parent_node = node
+        l_or_r = "r"
+        node = node.right
+      elsif data < node&.data
+        parent_node = node
+        l_or_r = "l"
+        node = node.left
+      else
+        break
+      end
+    end
+    if node&.data
+      if node.right && node.left
+        target_node = node
+        node = smallest(target_node.right)
+        node.right = target_node.right
+        node.left = target_node.left
+        BST._delete_smallest(target_node.right)
+      else
+        target_node = node.right || node.left
+        case l_or_r
+        when "l"
+        parent_node.left = target_node
+        when "r"
+        parent_node.right = target_node
+        when ""
+          @root = BSTNode.new(nil)
+        end
+      end
+      return true
+    else
+      return false
+    end
   end
 
   private
@@ -141,25 +178,5 @@ class BST
     else
       BST._delete_smallest(node.left)
     end
-  end
-
-  def self._delete(data, node)
-    return nil unless node
-
-    if node.data < data
-      node.right = BST._delete(data, node.right)
-    elsif node.data > data
-      node.left = BST._delete(data, node.left)
-    else
-      return node.left unless node.right
-      return node.right unless node.left
-
-      target = node
-      node = smallest(target.right)
-      node.right = target.right
-      BST._delete_smallest(target.right)
-      node.left = target.left
-    end
-    return node
   end
 end
