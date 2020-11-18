@@ -1,3 +1,5 @@
+require_relative "LL"
+
 class BSTNode
   attr_accessor :left, :right
   attr_reader :data
@@ -15,7 +17,7 @@ class BST
   end
 
   def insert(data)
-    if @root.data
+    if @root&.data
       BST._insert(data, @root)
     else
       @root = BSTNode.new(data)
@@ -59,6 +61,13 @@ class BST
     return BST._preorder_traversal(@root)
   end
 
+  def levelorder_traversal
+    unless @root&.data
+      return "tree empty!!"
+    end
+    return BST._levelorder_traversal(@root)
+  end
+
   def find(data)
     node = BST._find(data, @root)
     if node
@@ -75,7 +84,9 @@ class BST
   private
 
   def self._insert(data, node)
-    return BSTNode.new(data) unless node
+    unless node
+      return
+    end
     if data > node.data
       if node.right
         BST._insert(data, node.right)
@@ -111,6 +122,22 @@ class BST
     else
       return ""
     end
+  end
+
+  def self._levelorder_traversal(node)
+    result = ""
+    if node&.data
+      queue = LL.new()
+      queue.insert_last(node)
+      queue_node = queue.delete_first
+      while queue_node&.data
+        result = result + "#{queue_node.data.data},"
+        queue.insert_last(queue_node.data.left)
+        queue.insert_last(queue_node.data.right)
+        queue_node = queue.delete_first
+      end
+    end
+    return result
   end
 
   def self._postorder_traversal(node)

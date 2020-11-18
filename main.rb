@@ -9,6 +9,7 @@ def print_help
     "pr \tto print preorder traversal\n" +
     "in \tto print inorder traversal\n" +
     "po \tto print postorder traversal\n" +
+    "le \tto print levelorder traversal\n" +
     "l \tto print largest\n" +
     "s \tto print smallest\n" +
     "f \tto find an element\n" +
@@ -41,6 +42,9 @@ while action != "q"
   when "po"
     puts "postorder traversal"
     puts tree.postorder_traversal
+  when "le"
+    puts "levelorder traversal"
+    puts tree.levelorder_traversal
   when "l"
     puts "largest"
     puts tree.largest.data
