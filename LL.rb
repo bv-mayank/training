@@ -47,5 +47,4 @@ class LL
     end
     puts result
   end
-  private
 end
