@@ -50,7 +50,9 @@ class BST
     @root = BST._delete(data, @root)
   end
 
-  def self._insert(data,node)
+  private
+
+  def self._insert(data, node)
     return BSTNode.new(data) unless node
     if data > node.data
       if node.right
