@@ -23,27 +23,49 @@ class BST
   end
 
   def largest
-    BST._largest(@root)
+    unless @root&.data
+      puts "tree empty!!"
+      return
+    end
+    return BST._largest(@root)
   end
 
   def smallest
-    BST._smallest(@root)
+    unless @root&.data
+      puts "tree empty!!"
+      return
+    end
+    return BST._smallest(@root)
   end
 
   def inorder_traversal
-    BST._inorder_traversal(@root)
+    unless @root&.data
+      return "tree empty!!"
+    end
+    return BST._inorder_traversal(@root)
   end
 
   def postorder_traversal
-    BST._postorder_traversal(@root)
+    unless @root&.data
+      return "tree empty!!"
+    end
+    return BST._postorder_traversal(@root)
   end
 
   def preorder_traversal
-    BST._preorder_traversal(@root)
+    unless @root&.data
+      return "tree empty!!"
+    end
+    return BST._preorder_traversal(@root)
   end
 
   def find(data)
-    BST._find(data, @root)
+    node = BST._find(data, @root)
+    if node
+      puts "found!!"
+    else
+      puts "not found!!"
+    end
   end
 
   def delete(data)
@@ -68,33 +90,45 @@ class BST
   end
 
   def self._inorder_traversal(node)
-    if node
-      BST._inorder_traversal(node.left)
-      puts "#{node.data} "
-      BST._inorder_traversal(node.right)
+    if node&.data
+      return (
+        BST._inorder_traversal(node.left) +
+        "#{node.data}," +
+        BST._inorder_traversal(node.right)
+      )
+    else
+      return ""
     end
   end
 
   def self._preorder_traversal(node)
-    if node
-      puts "#{node.data} "
-      BST._inorder_traversal(node.left)
-      BST._inorder_traversal(node.right)
+    if node&.data
+      return (
+        "#{node.data}," +
+        BST._preorder_traversal(node.left) +
+        BST._preorder_traversal(node.right)
+      )
+    else
+      return ""
     end
   end
 
   def self._postorder_traversal(node)
-    if node
-      BST._inorder_traversal(node.left)
-      BST._inorder_traversal(node.right)
-      puts "#{node.data} "
+    if node&.data
+      return (
+        BST._postorder_traversal(node.left) +
+        BST._postorder_traversal(node.right) +
+        "#{node.data},"
+      )
+    else
+      return ""
     end
   end
 
   def self._largest(node)
     return nil unless node
     return node unless node.right
-    BST._largest(node.right)
+    return BST._largest(node.right)
   end
 
   def self._find(data, node)
@@ -102,16 +136,15 @@ class BST
     return node if node.data == data
     if data > node.data
       BST._find(data, node.right)
-    elsif
+    else
       BST._find(data, node.left)
     end
-    return nil
   end
 
   def self._smallest(node)
     return nil unless node
     return node unless node.left
-    BST._smallest(node.left)
+    return BST._smallest(node.left)
   end
 
   def self._delete_smallest(node)
@@ -140,63 +173,6 @@ class BST
       BST._delete_smallest(target.right)
       node.left = target.left
     end
-  end
-end
-
-tree = BST.new()
-action = "h"
-
-def print_help
-  puts "\n" +
-    "i \tto insert\n" +
-    "pr \tto print preorder traversal\n" +
-    "in \tto print inorder traversal\n" +
-    "po \tto print postorder traversal\n" +
-    "l \tto print largest\n" +
-    "s \tto print smallest\n" +
-    "f \tto find an element\n" +
-    "d \tto delete an element\n" +
-    "h \tto show help\n" +
-    "q \tto quit\n\n"
-end
-
-print_help
-while action != "q"
-  
-  action = gets.chomp
-  case action
-  when "h"
-    print_help
-  when "i"
-    puts "enter comma separated values of data to be inserted"
-    data_array = gets.chomp.split(',')
-    data_array.each { |data|
-      if data.to_i != 0 || (data == "0")
-        tree.insert(data.to_i)
-      end
-    }
-  when "in"
-    puts "inorder traversal"
-    tree.inorder_traversal
-  when "pr"
-    puts "preorder traversal"
-    tree.preorder_traversal
-  when "po"
-    puts "postorder traversal"
-    tree.postorder_traversal
-  when "l"
-    puts "largest"
-    puts tree.largest.data
-  when "s"
-    puts "smallest"
-    puts tree.smallest.data
-  when "f"
-    puts "enter data to be searched"
-    data = gets.chomp.to_i
-    tree.find(data)
-  when "d"
-    puts "enter data to be deleted"
-    data = gets.chomp.to_i
-    tree.delete(data)
+    return node
   end
 end
