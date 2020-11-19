@@ -6,7 +6,7 @@ class LL
     @last = @first
   end
 
-  def insert_last(data)
+  def insert(data)
     unless data
       return
     end
@@ -35,12 +35,9 @@ class LL
 
   def delete(data)
     node = find(data)
-    puts "node data #{node&.data}"
     if node
       left_node = node&.left
       right_node = node&.right
-      puts "left node data #{left_node&.data}"
-      puts "right node data #{right_node&.data}"
       if !(left_node || right_node)
         @first = Node.new(nil)
         @last = @first
@@ -62,7 +59,7 @@ class LL
     return node
   end
 
-  def print_list
+  def traverse
     result = ""
     node = @first
     while node&.data
@@ -74,8 +71,8 @@ class LL
 	
 	def find(data)
 		node = @first
-		until node && node&.data == data
-			node = node.right
+		while node && node&.data != data
+			node = node&.right
 		end
 		return node
   end

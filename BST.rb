@@ -92,12 +92,12 @@ class BST
     node = @root
     if node&.data
       queue = LL.new()
-      queue.insert_last(node)
+      queue.insert(node)
       queue_node = queue.delete_first
       while queue_node&.data
         result = result + "#{queue_node.data.data},"
-        queue.insert_last(queue_node.data.left)
-        queue.insert_last(queue_node.data.right)
+        queue.insert(queue_node.data.left)
+        queue.insert(queue_node.data.right)
         queue_node = queue.delete_first
       end
     end
