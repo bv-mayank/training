@@ -1,19 +1,9 @@
+require_relative "Node"
 require_relative "LL"
-
-class BSTNode
-  attr_accessor :left, :right
-  attr_reader :data
-
-  def initialize(data)
-    @data = data
-    @left = nil
-    @right = nil
-  end
-end
 
 class BST
   def initialize
-    @root = BSTNode.new(nil)
+    @root = Node.new(nil)
   end
 
   def insert(data)
@@ -24,18 +14,18 @@ class BST
           if node.right
             node = node.right
           else
-            node.right = BSTNode.new(data)
+            node.right = Node.new(data)
             break
           end
         elsif node.left
           node = node.left
         else
-          node.left = BSTNode.new(data)
+          node.left = Node.new(data)
           break
         end
       end
     else
-      @root = BSTNode.new(data)
+      @root = Node.new(data)
     end
   end
 
@@ -160,7 +150,7 @@ class BST
         when "r"
         parent_node.right = target_node
         when ""
-          @root = BSTNode.new(nil)
+          @root = Node.new(nil)
         end
       end
       return true
