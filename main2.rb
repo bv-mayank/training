@@ -42,6 +42,11 @@ while action != "q"
     puts "enter data to be deleted"
     data = gets.chomp.to_i
     puts list.delete(data) ? "deleted" : "no such element"
+  when "r"
+    puts "reversing the list"
+    list.reverse_list
+    result = list.print_list
+    puts result == "" ? "list empty!!" : result
   when "q"
     # puts "do you want to store the list in a output file? [y/n]"
     # option = gets.chomp

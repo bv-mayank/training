@@ -89,5 +89,8 @@ class LL
       node.left = old_right
       node = old_right
     end
+    old_first = @first
+    @first = @last
+    @last = old_first
   end
 end
