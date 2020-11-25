@@ -1,0 +1,25 @@
+<h1>Login</h1>
+
+<%= form_tag '/login' do %>
+	<p>
+	Email<br>
+	<%= text_field_tag :email %>
+	</p>
+
+	<p>
+	Password<br>
+	<%= password_field_tag :password %>
+	</p>
+	
+	<%= submit_tag "Login" %>
+
+	<p>
+		Not a registered user? <%= link_to 'Create account', '/signup' %>
+	</p>
+<% end %>
+
+<p>
+<% flash.each do |type, msg| %>
+	<%= msg %>
+<% end %>
+</P>

@@ -1,0 +1,32 @@
+<h1>Signup</h1>
+
+<%= form_for :user, url: '/signup' do |f| %>
+
+	<p>
+  Email<br>
+  <%= f.text_field :email %>
+  </p>
+
+  <p>
+  Password<br>
+  <%= f.password_field :password %>
+	</p>
+	
+	<p>
+  Confirm Password<br>
+  <%= f.password_field :password_confirmation %>
+  </p>
+
+  <%= f.submit "Signup" %>
+
+	<p>
+    Already registered? <%= link_to 'Login', '/login' %>
+  </p>
+<% end %>
+
+<p>
+<% flash.each do |type, msg| %>
+  <%= msg %>
+<% end %>
+</P>
+

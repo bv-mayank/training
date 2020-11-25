@@ -1,0 +1,33 @@
+<h1>Signup</h1>
+
+<% if @user.errors.any? %>
+	<div id="error_explanation">
+		<h2>Could not create Account</h2>
+		<ul>
+			<% @user.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>
+<%= form_tag model: @user, url: '/signup', method: 'post' do %>
+	<p>
+		Email<br>
+		<%= text_field_tag :email %>
+	</p>
+	<p>
+		Password<br>
+		<%= password_field_tag :password %>
+	</p>
+	<p>
+		Confirm Password<br>
+		<%= password_field_tag :confirm_password %><br>
+	</p>
+	<p>
+		<%= submit_tag "Signup" %>
+	</p>
+<% end %>
+
+<p>
+	Existing User? <%= link_to 'Login', '/login' %>
+</p>
