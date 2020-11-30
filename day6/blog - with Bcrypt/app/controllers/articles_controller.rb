@@ -2,17 +2,17 @@ class ArticlesController < ApplicationController
 	def index
 		authorize
 		@user = current_user
-  end
+	end
 
 	def show
-    @article = Article.find(params[:id])
-  end
+		@article = Article.find(params[:id])
+	end
 
 	def new
 		authorize
 		@user = current_user
 		@article = Article.new
-  end
+	end
 
 	def edit
 		@article = Article.find(params[:id])

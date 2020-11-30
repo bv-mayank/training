@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 		puts "\n\nuser_params ==="
 		puts user_params
 		puts "\n\n"
-		
+
 		@user = User.new(user_params)
 		puts "\n\n@user ==="
 		puts @user
